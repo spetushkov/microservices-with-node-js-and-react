@@ -1,0 +1,12 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "git": "git add . && git commit -m :rocket: && git push -f"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
