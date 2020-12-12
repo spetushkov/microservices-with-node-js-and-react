@@ -1,0 +1,10 @@
+@protocol = HTTP/1.1
+@host = http://localhost
+@port = 4002
+@baseUrl = /posts
+@url = {{host}}:{{port}}{{baseUrl}}
+@contentTypeJson = application/json
+
+### findAll posts
+GET {{url}} {{protocol}}
+Content-Type: {{contentTypeJson}}
