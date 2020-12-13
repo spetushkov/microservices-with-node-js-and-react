@@ -1,0 +1,10 @@
+@protocol = HTTP/1.1
+@host = http://localhost
+@port = 4004
+@baseUrl = /events
+@url = {{host}}:{{port}}{{baseUrl}}
+@contentTypeJson = application/json
+
+### findAll
+GET {{url}} {{protocol}}
+Content-Type: {{contentTypeJson}}

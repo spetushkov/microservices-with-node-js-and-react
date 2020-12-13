@@ -1,23 +1,23 @@
 @protocol = HTTP/1.1
 @host = http://localhost
 @port = 4001
-@baseUrl = /posts/{{postId}}/comments
-@baseUrl2 = /posts/comments
+@baseUrlByPostId = /posts/{{postId}}/comments
+@baseUrl = /posts/comments
+@urlByPostId = {{host}}:{{port}}{{baseUrlByPostId}}
 @url = {{host}}:{{port}}{{baseUrl}}
-@url2 = {{host}}:{{port}}{{baseUrl2}}
 @contentTypeJson = application/json
-@postId = 6a50b8cb
+@postId = 43ea959c
 
 ### findAll posts
-GET {{url2}} {{protocol}}
-Content-Type: {{contentTypeJson}}
-
-### findAll posts by postId
 GET {{url}} {{protocol}}
 Content-Type: {{contentTypeJson}}
 
+### findAll posts by postId
+GET {{urlByPostId}} {{protocol}}
+Content-Type: {{contentTypeJson}}
+
 ### save
-POST {{url}} {{protocol}}
+POST {{urlByPostId}} {{protocol}}
 Content-Type: {{contentTypeJson}}
 
 {

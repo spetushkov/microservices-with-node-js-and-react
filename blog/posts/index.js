@@ -38,11 +38,23 @@ app.post('/posts', async (req, res, next) => {
 app.post('/events', (req, res, next) => {
   try {
     const { type, payload } = req.body;
-    res.status(200).send({});
+
+    eventHandler({ type, payload });
+
+    res.status(200).send({ status: 'OK' });
   } catch (error) {
     next(error);
   }
 });
+
+const eventHandler = ({ type, payload }) => {
+  console.log('PROCESS', type);
+
+  switch (type) {
+    default:
+      break;
+  }
+};
 
 const event = (type, payload) => {
   return { type, payload };
@@ -50,6 +62,8 @@ const event = (type, payload) => {
 
 const dispatch = async ({ type, payload }) => {
   try {
+    console.log('DISPATCH ', type);
+
     await axios.post('http://localhost:4004/events', { type, payload }); // event-bus
     return Promise.resolve();
   } catch (error) {
@@ -58,5 +72,5 @@ const dispatch = async ({ type, payload }) => {
 };
 
 app.listen(4000, () => {
-  console.log('Posts service: started on port 4000');
+  console.log('Posts Service: started on port 4000');
 });

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
@@ -20,16 +21,7 @@ app.post('/events', (req, res, next) => {
   try {
     const { type, payload } = req.body;
 
-    switch (type) {
-      case 'PostCreated':
-        postCreated(payload);
-        break;
-      case 'CommentCreated':
-        commentCreated(payload);
-        break;
-      default:
-        break;
-    }
+    eventHandler({ type, payload });
 
     res.status(200).send({ status: 'OK' });
   } catch (error) {
@@ -37,17 +29,57 @@ app.post('/events', (req, res, next) => {
   }
 });
 
+const eventHandler = ({ type, payload }) => {
+  console.log('PROCESS', type);
+
+  switch (type) {
+    case 'PostCreated':
+      postCreated(payload);
+      break;
+    case 'CommentCreated':
+      commentCreated(payload);
+      break;
+    case 'CommentUpdated':
+      commentUpdated(payload);
+      break;
+    default:
+      break;
+  }
+};
+
 const postCreated = ({ id, title }) => {
   posts[id] = { id, title, comments: [] };
 };
 
-const commentCreated = ({ id, content, postId }) => {
+const commentCreated = ({ id, content, status, postId }) => {
   const post = posts[postId];
   if (post) {
-    post.comments.push({ id, content });
+    post.comments.push({ id, content, status });
   }
 };
 
-app.listen(4002, () => {
-  console.log('Query service: started on port 4002');
+const commentUpdated = ({ id, content, status, postId }) => {
+  const post = posts[postId];
+  if (post) {
+    const comment = post.comments.find(comment => comment.id === id);
+    if (comment) {
+      comment.status = status;
+      comment.content = content;
+    }
+  }
+};
+
+app.listen(4002, async () => {
+  try {
+    console.log('Data Query Service: started on port 4002');
+
+    const response = await axios.get('http://localhost:4004/events'); // event-bus
+
+    for (let event of response.data) {
+      const { type, payload } = event;
+      eventHandler({ type, payload });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
