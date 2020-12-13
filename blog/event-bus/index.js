@@ -26,10 +26,10 @@ app.post('/events', async (req, res, next) => {
     const event = { type, payload };
     events.push(event);
 
-    await process('Posts Service', 'http://localhost:4000/events', event); // posts service
-    await process('Comments Service', 'http://localhost:4001/events', event); // comments service
-    await process('Data Query Service', 'http://localhost:4002/events', event); // query service
-    await process('Comments Moderation Service', 'http://localhost:4003/events', event); // moderation service
+    await service('Posts Service', 'http://localhost:4000/events', event);
+    await service('Comments Service', 'http://localhost:4001/events', event);
+    await service('Data Query Service', 'http://localhost:4002/events', event);
+    await service('Comments Moderation Service', 'http://localhost:4003/events', event);
 
     res.status(200).send({ status: 'OK' });
   } catch (error) {
@@ -37,7 +37,7 @@ app.post('/events', async (req, res, next) => {
   }
 });
 
-const process = async (name, url, { type, payload }) => {
+const service = async (name, url, { type, payload }) => {
   try {
     await axios.post(url, { type, payload });
   } catch (error) {
