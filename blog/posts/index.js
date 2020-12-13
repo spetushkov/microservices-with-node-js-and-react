@@ -23,19 +23,11 @@ app.post('/posts', async (req, res, next) => {
     const id = randomBytes(4).toString('hex');
     const { title } = req.body;
 
-    posts[id] = { id, title };
+    const post = { id, title };
 
-    const event = {
-      type: 'PostCreated',
-      payload: { id, title }
-    };
+    posts[id] = post;
 
-    try {
-      await axios.post('http://localhost:4003/events', event); // event-bus
-    } catch (error) {
-      res.status(500).send({ error: error.message });
-      return;
-    }
+    await dispatch(event('PostCreated', { ...post }));
 
     res.status(201).send(posts[id]);
   } catch (error) {
@@ -51,6 +43,19 @@ app.post('/events', (req, res, next) => {
     next(error);
   }
 });
+
+const event = (type, payload) => {
+  return { type, payload };
+};
+
+const dispatch = async ({ type, payload }) => {
+  try {
+    await axios.post('http://localhost:4004/events', { type, payload }); // event-bus
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 
 app.listen(4000, () => {
   console.log('Posts service: started on port 4000');

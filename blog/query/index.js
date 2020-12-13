@@ -49,5 +49,5 @@ const commentCreated = ({ id, content, postId }) => {
 };
 
 app.listen(4002, () => {
-  console.log('Event-bus-query service: started on port 4002');
+  console.log('Query service: started on port 4002');
 });

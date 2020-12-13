@@ -33,21 +33,13 @@ app.post('/posts/:id/comments', async (req, res, next) => {
     const { content } = req.body;
     const postId = req.params.id;
 
+    const comment = { id: commentId, content, status: 'pending' };
+
     const comments = commentsByPostId[postId] || [];
-    comments.push({ id: commentId, content });
+    comments.push(comment);
     commentsByPostId[postId] = comments;
 
-    const event = {
-      type: 'CommentCreated',
-      payload: { id: commentId, content, postId }
-    };
-
-    try {
-      await axios.post('http://localhost:4003/events', event); // event-bus
-    } catch (error) {
-      res.status(500).send({ error: error.message });
-      return;
-    }
+    await dispatch(event('CommentCreated', { ...comment, postId }));
 
     res.status(201).send(commentsByPostId[postId]);
   } catch (error) {
@@ -63,6 +55,19 @@ app.post('/events', (req, res, next) => {
     next(error);
   }
 });
+
+const event = (type, payload) => {
+  return { type, payload };
+};
+
+const dispatch = async ({ type, payload }) => {
+  try {
+    await axios.post('http://localhost:4004/events', { type, payload }); // event-bus
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 
 app.listen(4001, () => {
   console.log('Comments service: started on port 4001');
