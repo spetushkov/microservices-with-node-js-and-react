@@ -7,20 +7,23 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/events', async (req, res) => {
-  const event = req.body;
-
+app.post('/events', async (req, res, next) => {
   try {
-    await axios.post('http://localhost:4000/events', event); // posts
-    await axios.post('http://localhost:4001/events', event); // comments
-    await axios.post('http://localhost:4002/events', event); // event-bus-query service
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: error.message });
-    return;
-  }
+    const event = req.body;
 
-  res.status(200).send({ status: 'OK' });
+    try {
+      await axios.post('http://localhost:4000/events', event); // posts
+      await axios.post('http://localhost:4001/events', event); // comments
+      await axios.post('http://localhost:4002/events', event); // event-bus-query service
+    } catch (error) {
+      res.status(500).send({ error: error.message });
+      return;
+    }
+
+    res.status(200).send({ status: 'OK' });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.listen(4003, () => {
