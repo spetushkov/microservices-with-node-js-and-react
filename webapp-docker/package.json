@@ -1,0 +1,18 @@
+{
+  "name": "webapp-docker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "docker:build": "docker build -t spetushkov/webapp-docker:latest .",
+    "docker:start": "docker run -p 8080:8080 spetushkov/webapp-docker",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
