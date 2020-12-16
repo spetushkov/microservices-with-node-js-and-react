@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "blog-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t spetushkov/blog-client:latest .",
+    "docker:start": "docker run -it -p 3000:3000 spetushkov/blog-client"
   },
   "eslintConfig": {
     "extends": [

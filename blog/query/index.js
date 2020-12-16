@@ -80,6 +80,6 @@ app.listen(4002, async () => {
       eventHandler({ type, payload });
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });

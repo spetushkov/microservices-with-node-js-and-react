@@ -1,11 +1,13 @@
 {
-  "name": "moderation",
+  "name": "blog-moderation",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "docker:build": "docker build -t spetushkov/blog-moderation:latest .",
+    "docker:start": "docker run -it -p 4003:4003 spetushkov/blog-moderation"
   },
   "keywords": [],
   "author": "",

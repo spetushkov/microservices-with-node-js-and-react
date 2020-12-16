@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "docker:build": "docker build -t spetushkov/webapp-docker:latest .",
-    "docker:start": "docker run -p 8080:8080 spetushkov/webapp-docker",
+    "docker:start": "docker run -it -p 8080:8080 spetushkov/webapp-docker",
     "start": "node index.js"
   },
   "keywords": [],
