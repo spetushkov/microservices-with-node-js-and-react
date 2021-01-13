@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-posts
+  template:
+    metadata:
+      labels:
+        app: blog-posts
+    spec:
+      containers:
+        - name: blog-posts    
+          image: spetushkov/blog-posts:0.0.1

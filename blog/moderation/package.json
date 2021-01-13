@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "docker:build": "docker build -t spetushkov/blog-moderation:latest .",
-    "docker:start": "docker run -it -p 4003:4003 spetushkov/blog-moderation"
+    "docker:build": "docker build -t spetushkov/blog-moderation .",
+    "docker:start": "docker run -it spetushkov/blog-moderation"
   },
   "keywords": [],
   "author": "",

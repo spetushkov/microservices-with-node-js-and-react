@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "docker:build": "docker build -t spetushkov/blog-event-bus:latest .",
-    "docker:start": "docker run -it -p 4004:4004 spetushkov/blog-event-bus"
+    "docker:build": "docker build -t spetushkov/blog-event-bus .",
+    "docker:start": "docker run -it spetushkov/blog-event-bus"
   },
   "keywords": [],
   "author": "",

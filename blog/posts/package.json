@@ -1,13 +1,13 @@
 {
   "name": "blog-posts",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "docker:build": "docker build -t spetushkov/blog-posts:latest .",
-    "docker:start": "docker run -it -p 4000:4000 spetushkov/blog-posts"
+    "docker:build": "docker build -t spetushkov/blog-posts:0.0.1 .",
+    "docker:start": "docker run -it spetushkov/blog-posts:0.0.1"
   },
   "keywords": [],
   "author": "",
