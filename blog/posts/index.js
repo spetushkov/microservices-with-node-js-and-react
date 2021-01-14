@@ -72,5 +72,6 @@ const dispatch = async ({ type, payload }) => {
 };
 
 app.listen(4000, () => {
+  console.log('Posts updated 0.0.2');
   console.log('Posts Service: started on port 4000');
 });
